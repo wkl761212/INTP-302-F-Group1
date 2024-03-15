@@ -1,0 +1,18 @@
+<!-- templates/form.html -->
+<html>
+  <head>
+    <title>FastAPI Form Example</title>
+  </head>
+  <body>
+    <h1>Prompt a Model</h1>
+    <form method="post">
+      <label for="prompt">Enter a prompt:</label>
+      <input type="text" id="prompt" name="prompt" required />
+      <button type="submit">Submit</button>
+    </form>
+    {% if response %}
+    <h2>Response:</h2>
+    <p>{{ response }}</p>
+    {% endif %}
+  </body>
+</html>
