@@ -4,15 +4,52 @@
     <title>FastAPI Form Example</title>
   </head>
   <body>
-    <h1>Prompt a Model</h1>
-    <form method="post">
-      <label for="prompt">Enter a prompt:</label>
-      <input type="text" id="prompt" name="prompt" required />
+    <h1>Upload an Invoice or Receipt for Purulator</h1>
+    <form method="post" enctype="multipart/form-data">
+      <label for="file">Choose a file:</label>
+      <input type="file" id="file" name="file" required />
       <button type="submit">Submit</button>
     </form>
-    {% if response %}
-    <h2>Response:</h2>
-    <p>{{ response }}</p>
+
+    {% if invoice_data %}
+    <h2>Invoice Details:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in invoice_data.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>
+                    {% if key == 'line_items' %}
+                        <table>
+                            {% for item in value %}
+                                <tr>
+                                    <td>Item:</td>
+                                    <td>
+                                        Name: {{ item.name or 'No Information' }},
+                                        Value: {{ item.value or 'No Information' }},
+                                        Quantity: {{ item.quantity or 'No Information' }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% endif %}
+
+    
+
+
   </body>
 </html>
